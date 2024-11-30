@@ -11,7 +11,7 @@ namespace Autenticul.Gaming.Api.Controllers
 
         public async Task<bool> GetIsAdminState()
         {
-            var adminId = new Guid("c37e9e97-16ad-4efc-3550-08dd0834301a");
+            var adminId = new Guid("f4b654bc-c03f-41fe-9851-08dd107ee0f5");
             var currentUser = await _userRepository.GetByUserNameAsync(HttpContext.User.Identity.Name);
             if(currentUser == null)
             {

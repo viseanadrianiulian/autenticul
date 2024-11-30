@@ -40,7 +40,10 @@ namespace Autenticul.Gaming.Application.Features.Users.Commands.Login
                 else
                 {
                     var dbUser = await _userRepository.GetByUserNameAsync(command.UserLogin.Username);
-                    dbUser.LoginCounter++;
+                    if(DateTime.Now.Subtract(dbUser.LastModifiedDate.Value.Date).Days > 0)
+                    {
+                        dbUser.LoginCounter++;
+                    }
                     await _userRepository.UpdateAsync(dbUser);
                 }
 

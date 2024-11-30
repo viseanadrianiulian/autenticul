@@ -7,6 +7,7 @@ using Serilog;
 using Autenticul.Gaming.Api.Middleware;
 using Autenticul.Gaming.Application.Contracts.Persistence;
 using Autenticul.Gaming.Persistence.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace Autenticul.Gaming.Api
 {
@@ -31,8 +32,8 @@ namespace Autenticul.Gaming.Api
 
             builder.Services.AddCors(options =>
             {
-                options.AddPolicy("Open", builder => builder
-                .WithOrigins("http://localhost:4200")
+                options.AddPolicy("Open", b => b
+                .WithOrigins("http://localhost:4200", "https://www.autenticul.ro", "autenticul.ro")
                 .AllowAnyHeader()
                 .AllowAnyMethod()
                 .AllowCredentials()
@@ -91,23 +92,13 @@ namespace Autenticul.Gaming.Api
             });
         }
 
-        //public static async Task ResetDatabaseAsync(this WebApplication app)
-        //{
-        //    using var scope = app.Services.CreateScope();
-        //    try
-        //    {
-        //        var context = scope.ServiceProvider.GetService<FoodTrackDbContext>();
-        //        if (context != null)
-        //        {
-        //            await context.Database.EnsureDeletedAsync();
-        //            await context.Database.MigrateAsync();
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        var logger = scope.ServiceProvider.GetRequiredService<ILogger>();
-        //        logger.LogError(ex, "An error occurred while migrating the database.");
-        //    }
-        //}
+        public static async Task ResetDatabaseAsync(this WebApplication app)
+        {
+            using (var scope = app.Services.CreateScope())
+            {
+                var dbContext = scope.ServiceProvider.GetRequiredService<GamingDbContext>();
+                dbContext.Database.Migrate();
+            }
+        }
     }
 }
