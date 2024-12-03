@@ -23,15 +23,15 @@ namespace Autenticul.Gaming.Persistence
             
 
             //we can seed data
-            modelBuilder.Entity<User>().HasData(
-                new User 
-                { 
-                    Id = new Guid("c37e9e97-16ad-4efc-3550-08dd0834301a"),
-                    UserName = "admin",
-                    Password = BCrypt.Net.BCrypt.HashPassword("pass"),
-                    CreatedDate = DateTime.Now, 
-                    LastModifiedDate = DateTime.Now 
-                });
+            //modelBuilder.Entity<User>().HasData(
+            //    new User 
+            //    { 
+            //        Id = new Guid("c37e9e97-16ad-4efc-3550-08dd0834301a"),
+            //        UserName = "admin",
+            //        Password = BCrypt.Net.BCrypt.HashPassword("pass"),
+            //        CreatedDate = DateTime.Now, 
+            //        LastModifiedDate = DateTime.Now 
+            //    });
             //we can seed data
         }
 

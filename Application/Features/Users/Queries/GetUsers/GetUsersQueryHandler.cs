@@ -27,7 +27,8 @@ namespace Autenticul.Gaming.Application.Features.Users.Queries.GetUsers
                 new UserDto()
                 {
                     Username = x.UserName,
-                    Score = x.Score
+                    Score = x.Score,
+                    LoginCounter = x.LoginCounter
                 }
             ).ToList();
                 

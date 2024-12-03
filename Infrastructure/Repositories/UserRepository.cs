@@ -25,8 +25,40 @@ namespace Autenticul.Gaming.Persistence.Repositories
 
         public async Task<User> GetByUserNameAsync(string userName)
         {
-            return await _dbContext.Users.FirstAsync(x => x.UserName == userName);
-        }
+            try
+            {
+                var needUpdate = false;
+                var dbUser = await _dbContext.Users.FirstOrDefaultAsync(x => x.UserName == userName);
+
+                if (dbUser != null)
+                {
+                    if (dbUser.LastModifiedDate.HasValue)
+                    {
+                        if (DateTime.Now.Subtract(dbUser.LastModifiedDate.Value.Date).Days > 0)
+                        {
+                            dbUser.LoginCounter++;
+                            needUpdate = true;
+                        }
+                    }
+                    else
+                    {
+                        dbUser.LoginCounter++;
+                        needUpdate = true;
+                    }
+                    if (needUpdate)
+                    {
+                        await UpdateAsync(dbUser);
+                    }
+                }
+
+                return dbUser;
+            }
+            catch( Exception ex)
+            {
+                Console.WriteLine(ex);
+                return null;
+            }
+         }
 
         public async Task<string> LoginUserAsync(UserDto user)
         {

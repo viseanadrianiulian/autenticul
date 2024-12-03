@@ -19,11 +19,11 @@ namespace Autenticul.Gaming.Api.Controllers
     {
         private readonly IMediator _mediator;
         private readonly IUserRepository _userRepository;
+        private readonly ILogger<EventController> _logger;
 
-        public EventController(IMediator mediator, IUserRepository userRepository):base(userRepository)
+        public EventController(IMediator mediator, IUserRepository userRepository, ILogger<EventController> logger) : base(userRepository, logger)
         {
             _mediator = mediator;
-            _userRepository = userRepository;
         }
 
         [HttpPost("create", Name = "CreateEvent")]
