@@ -12,6 +12,7 @@ var app = builder
     .ConfigureServices()
     .ConfigurePipeline();
 //await app.ResetDatabaseAsync();
+app.MapFallbackToFile("index.html");
 
 
 app.Run();

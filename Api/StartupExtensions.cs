@@ -33,7 +33,7 @@ namespace Autenticul.Gaming.Api
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("Open", b => b
-                .WithOrigins("https://www.autenticul.ro", "https://www.api.autenticul.ro")
+                .WithOrigins("https://autenticul.ro", "https://.api.autenticul.ro", "http://localhost:4200")
                 .AllowAnyHeader()
                 .AllowAnyMethod()
                 .AllowCredentials()

@@ -26,13 +26,27 @@ namespace Autenticul.Gaming.Application.Features.Events.Commands.PlaceBet
         {
             var response = new PlaceBetCommandResponse();
 
+            var liveEvent = await _eventRepository.GetLiveEventAsync();
+            if(liveEvent == null)
+            {
+                response.Success = false;
+                response.Message = "Nu mai exista event live.";
+                return response;
+            }
+            if(!liveEvent.BetsActive)
+            {
+                response.Success = false;
+                response.Message = "Ooops! Ai fost prea lent...pariurile au fost inchise intre timp.";
+                return response;
+            }
+
             var userDb = await _userRepository.GetByUserNameAsync(command.NewBet.Username);
             command.NewBet = new BetDto();
             var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
             command.NewBet = JsonSerializer.Deserialize<BetDto>(command.NewBetString, options);
 
             var betToBeAdded = _mapper.Map<Bet>(command.NewBet);
-            betToBeAdded.Event = await _eventRepository.GetLiveEventAsync();
+            betToBeAdded.Event = liveEvent;
             betToBeAdded.User = userDb;
             try
             {

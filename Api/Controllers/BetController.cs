@@ -24,7 +24,7 @@ namespace Autenticul.Gaming.Api.Controllers
         {
             createBetCommand.NewBet = new();
             createBetCommand.NewBet.Username = HttpContext.User.Identity.Name;
-            var response = await _mediator.Send(createBetCommand);
+            var response = await _mediator.Send(createBetCommand);         
             return Ok(response);
         }
     }
