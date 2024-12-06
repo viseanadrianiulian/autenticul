@@ -25,15 +25,32 @@ namespace Autenticul.Gaming.Application.Features.Users.Commands.RegisterUser
         public async Task<RegisterUserCommandResponse> Handle(RegisterUserCommand command, CancellationToken cancellationToken)
         {
             var response = new RegisterUserCommandResponse();
-            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-            command.NewUser = JsonSerializer.Deserialize<UserDto>(command.NewUserString!, options);
+            var userToRegister = await _userRepository.GetByUserNameAsync(command.Username);
+            if (userToRegister != null)
+            {
+                response.Success = false;
+                response.Message = "Exista deja un user cu acest username.";
+                return response;
+            }
+            userToRegister = await _userRepository.GetByEmailAsync(command.Email);
+            if (userToRegister != null)
+            {
+                response.Success = false;
+                response.Message = "Exista deja un user cu acest email.";
+                return response;
+            }
 
+            userToRegister = new User()
+            {
+                UserName = command.Username,
+                Email = command.Email,
+                Password = command.Password,
+                Score = 0,
+                LoginCounter = 0
+            };
             try
             {
-                command.NewUser.Score = 0;
-                var userToRegister = _mapper.Map<User>(command.NewUser);
                 var newUser = await _userRepository.RegisterUserAsync(userToRegister);
-                newUser.LoginCounter = 0;
                 response.CreatedUser = _mapper.Map<UserDto>(newUser);
             }
             catch (Exception ex)

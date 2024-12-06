@@ -24,6 +24,7 @@ namespace Autenticul.Gaming.Api.Controllers
         {
             var response = await _mediator.Send(registerUserCommand);
             return Ok(response);
+            
         }
 
         [HttpPost("login", Name = "LoginUser")]
