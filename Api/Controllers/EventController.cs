@@ -4,6 +4,7 @@ using Autenticul.Gaming.Application.Features.Events.Commands.CreateEvent;
 using Autenticul.Gaming.Application.Features.Events.Commands.PlaceBet;
 using Autenticul.Gaming.Application.Features.Events.Commands.SaveEventResult;
 using Autenticul.Gaming.Application.Features.Events.Commands.StopBets;
+using Autenticul.Gaming.Application.Features.Events.Querries.GetAllPastEvents;
 using Autenticul.Gaming.Application.Features.Events.Querries.GetLiveEvent;
 using Autenticul.Gaming.Domain.Entities;
 using Autenticul.Gaming.Persistence.Repositories;
@@ -24,6 +25,15 @@ namespace Autenticul.Gaming.Api.Controllers
         public EventController(IMediator mediator, IUserRepository userRepository, ILogger<EventController> logger) : base(userRepository, logger)
         {
             _mediator = mediator;
+        }
+
+        [HttpGet("getallpastevents", Name = "GetAllPastEvents")]
+        [Authorize]
+        public async Task<ActionResult<GetAllPastEventsQueryResponse>> GetAllPastEvents()
+        {
+            var response = await _mediator.Send(new GetAllPastEventsQuery());
+
+            return Ok(response);
         }
 
         [HttpPost("create", Name = "CreateEvent")]
