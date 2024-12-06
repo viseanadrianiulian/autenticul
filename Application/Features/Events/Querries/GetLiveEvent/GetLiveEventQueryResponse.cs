@@ -11,6 +11,7 @@ namespace Autenticul.Gaming.Application.Features.Events.Querries.GetLiveEvent
     {
         public GetLiveEventQueryResponse() : base() { }
         public EventDto? LiveEvent { get; set; }
+        public List<EventDto> PastEvents { get; set; }
         public BetDto? UserBet { get; set; }
     }
 }

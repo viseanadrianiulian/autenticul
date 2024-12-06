@@ -9,5 +9,6 @@ namespace Autenticul.Gaming.Application.Contracts.Persistence
 {
     public interface IBetRepository : IAsyncRepository<Bet>
     {
+        IEnumerable<Bet> GetAllBetsForUser(Guid userId);
     }
 }
