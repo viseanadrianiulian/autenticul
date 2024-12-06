@@ -28,6 +28,13 @@ namespace Autenticul.Gaming.Application.Features.Events.Querries.GetLiveEvent
             var response = new GetLiveEventQueryResponse();
 
             var currentUser = await _userRepository.GetByUserNameAsync(request.UserName);
+            var userBets = _betRepository.GetAllBetsForUser(currentUser.Id);
+
+            response.PastEvents = new List<EventDto>();
+            foreach (var xbet in userBets)
+            {
+                response.PastEvents.Add(_mapper.Map<EventDto>(xbet.Event));
+            }
 
             var liveEvent = await _eventRepository.GetLiveEventAsync();
             if(liveEvent == null)

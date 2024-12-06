@@ -27,30 +27,7 @@ namespace Autenticul.Gaming.Persistence.Repositories
         {
             try
             {
-                var needUpdate = false;
                 var dbUser = await _dbContext.Users.FirstOrDefaultAsync(x => x.UserName == userName);
-
-                if (dbUser != null)
-                {
-                    if (dbUser.LastModifiedDate.HasValue)
-                    {
-                        if (DateTime.Now.Subtract(dbUser.LastModifiedDate.Value.Date).Days > 0)
-                        {
-                            dbUser.LoginCounter++;
-                            needUpdate = true;
-                        }
-                    }
-                    else
-                    {
-                        dbUser.LoginCounter++;
-                        needUpdate = true;
-                    }
-                    if (needUpdate)
-                    {
-                        await UpdateAsync(dbUser);
-                    }
-                }
-
                 return dbUser;
             }
             catch( Exception ex)
@@ -60,13 +37,55 @@ namespace Autenticul.Gaming.Persistence.Repositories
             }
          }
 
+        public async Task<User> GetByEmailAsync(string email)
+        {
+            try
+            {
+                var dbUser = await _dbContext.Users.FirstOrDefaultAsync(x => x.Email == email);
+                return dbUser;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        private async Task<bool> IncreaseCounterIfNeeded(User user)
+        {
+            bool needUpdate = false;
+            if (user.LastModifiedDate.HasValue)
+            {
+                if (DateTime.Now.Subtract(user.LastModifiedDate.Value.Date).Days > 0)
+                {
+                    user.LoginCounter++;
+                    needUpdate = true;
+                }
+            }
+            else
+            {
+                user.LoginCounter++;
+                needUpdate = true;
+            }
+            if (needUpdate)
+            {
+                await UpdateAsync(user);
+            }
+            return needUpdate;
+        }
+
         public async Task<string> LoginUserAsync(UserDto user)
         {
             var dbUser = await GetByUserNameAsync(user.Username);
-            var checkPassword = BCrypt.Net.BCrypt.Verify(user.Password, dbUser.Password);
-            if(checkPassword)
-            {
-                return GenerateJwtToken(dbUser);
+
+            if (dbUser != null)
+            { 
+                var checkPassword = BCrypt.Net.BCrypt.Verify(user.Password, dbUser.Password);
+                if (checkPassword)
+                {
+                    // increase login counter for today 
+                    await IncreaseCounterIfNeeded(dbUser);
+                    return GenerateJwtToken(dbUser);
+                }
             }
             return "";
         }

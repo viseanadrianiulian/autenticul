@@ -12,6 +12,7 @@ namespace Autenticul.Gaming.Application.Contracts.Persistence
     public interface IUserRepository : IAsyncRepository<User>
     {
         Task<User> GetByUserNameAsync(string userName);
+        Task<User> GetByEmailAsync(string email);
         Task<string> LoginUserAsync(UserDto user);
         Task<User> RegisterUserAsync(User user);
     }
