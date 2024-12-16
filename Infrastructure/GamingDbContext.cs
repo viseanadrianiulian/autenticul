@@ -15,6 +15,7 @@ namespace Autenticul.Gaming.Persistence
         public DbSet<User> Users { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<Bet> Bets { get; set; }
+        public DbSet<Prize> Prizes { get; set; }
         
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
