@@ -17,7 +17,7 @@ namespace Autenticul.Gaming.Api.Controllers
         }
 
 
-        public async Task<bool> GetIsAdminState()
+        protected async Task<bool> GetIsAdminState()
         {
             _logger.LogDebug("Inside GetIsAdminState: ");
             var adminId = new Guid("17d8ff1b-ac63-48cc-42f8-08dd12f5870b");

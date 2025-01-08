@@ -11,5 +11,6 @@ namespace Autenticul.Gaming.Application.Features.Users.Commands.Login
     {
         public string? JWTToken {  get; set; } = string.Empty;
         public DateTime? ExpiresIn { get; set; }
+        public bool IsStreamer { get; set; } = false;
     }
 }

@@ -27,6 +27,9 @@ namespace Autenticul.Gaming.Application.Responses
         public bool Success { get; set; }
         public string Message { get; set; } = string.Empty;
         public bool IsAdmin { get; set; } = false;
+
+        public string UserName { get; set; } = string.Empty;
+        
         public List<string>? ValidationErrors { get; set; }
     }
 }

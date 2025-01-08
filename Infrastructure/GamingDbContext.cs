@@ -11,7 +11,7 @@ namespace Autenticul.Gaming.Persistence
         {
         }
 
-
+        public DbSet<Streamer> Streamers { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<Bet> Bets { get; set; }
