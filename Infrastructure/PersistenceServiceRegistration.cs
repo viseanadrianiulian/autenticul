@@ -46,7 +46,8 @@ namespace Autenticul.Gaming.Persistence
             services.AddScoped<IBetRepository, BetRepository>();
             services.AddScoped<IPrizeRepository, PrizeRepository>();
             services.AddScoped<IStreamerRepository, StreamerRepository>();
-
+            services.AddScoped<IArticleRepository, ArticleRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
             return services;
         }
     }
