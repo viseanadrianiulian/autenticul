@@ -30,8 +30,15 @@ namespace Autenticul.Gaming.Api.Controllers
         [HttpPost("login", Name = "LoginUser")]
         public async Task<ActionResult<LoginUserCommandResponse>> Login([FromForm] LoginUserCommand loginUserCommand)
         {
-            var response = await _mediator.Send(loginUserCommand);
-            return Ok(response);
+            if (loginUserCommand != null)
+            {
+                var response = await _mediator.Send(loginUserCommand);
+                return Ok(response);
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
        

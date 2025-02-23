@@ -45,12 +45,9 @@ namespace Autenticul.Gaming.Persistence
             services.AddScoped<IEventRepository, EventRepository>();
             services.AddScoped<IBetRepository, BetRepository>();
             services.AddScoped<IPrizeRepository, PrizeRepository>();
-            //services.AddScoped<IProductRepository, ProductRepository>();
-            //services.AddScoped<IRecipeRepository, RecipeRepository>();
-            //services.AddScoped<IMacrosRepository, MacrosRepository>();
-            //services.AddScoped<IProductQuantityRepository, ProductQuantityRepository>();
-            //services.AddScoped<IMealPlanRepository, MealPlanRepository>();
-
+            services.AddScoped<IStreamerRepository, StreamerRepository>();
+            services.AddScoped<IArticleRepository, ArticleRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
             return services;
         }
     }
