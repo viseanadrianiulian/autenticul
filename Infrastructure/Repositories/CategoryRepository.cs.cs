@@ -1,0 +1,17 @@
+﻿using Autenticul.Gaming.Application.Contracts.Persistence;
+using Autenticul.Gaming.Domain.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Autenticul.Gaming.Persistence.Repositories
+{
+    public class CategoryRepository : BaseRepository<Category>, ICategoryRepository
+    {
+        public CategoryRepository(GamingDbContext dbContext) : base(dbContext)
+        {
+        }
+    }
+}

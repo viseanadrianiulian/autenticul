@@ -9,8 +9,7 @@ namespace Autenticul.Gaming.Application.Features.Users.Commands.Login
 {
     public class LoginUserCommand : IRequest<LoginUserCommandResponse>
     {
-        public UserDto? UserLogin { get; set; }
-
-        public string? UserLoginString { get; set; }
+        public string UserName { get; set; }
+        public string Password { get; set; }
     }
 }

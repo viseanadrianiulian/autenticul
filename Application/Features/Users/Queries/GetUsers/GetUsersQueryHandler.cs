@@ -31,6 +31,11 @@ namespace Autenticul.Gaming.Application.Features.Users.Queries.GetUsers
                     LoginCounter = x.LoginCounter
                 }
             ).ToList();
+            var admin = response.Users.FirstOrDefault(x => x.Username == "admin");
+            if(admin != null)
+            {
+                response.Users.Remove(admin);
+            }
                 
 
             return response;

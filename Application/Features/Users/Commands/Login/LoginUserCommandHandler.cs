@@ -26,24 +26,28 @@ namespace Autenticul.Gaming.Application.Features.Users.Commands.Login
         {
             var response = new LoginUserCommandResponse();
 
-            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-            command.UserLogin = JsonSerializer.Deserialize<UserDto>(command.UserLoginString!, options);
-            if (command.UserLogin != null)
-            {
+            var userLogin = new UserDto() { Username = command.UserName, Password = command.Password };
 
-                response.JWTToken = await _userRepository.LoginUserAsync(command.UserLogin);
+            response.JWTToken = await _userRepository.LoginUserAsync(userLogin);
+            if (String.IsNullOrWhiteSpace(response.JWTToken))
+            {
+                response.Success = false;
+            }
+            else
+            {
                 response.ExpiresIn = DateTime.Now.AddHours(2);
-                if(String.IsNullOrWhiteSpace(response.JWTToken))
+                if(userLogin.Username.StartsWith("s_"))
                 {
-                    response.Success = false;
+                    response.IsStreamer = true;
                 }
                 else
                 {
-                    var dbUser = await _userRepository.GetByUserNameAsync(command.UserLogin.Username);
-                   
+                    response.IsStreamer = false;
                 }
+                response.UserName = command.UserName;
 
             }
+        
             if (!response.Success)
             {
                 response.Message = "Login credentials are incorrect.";

@@ -57,13 +57,13 @@ namespace Autenticul.Gaming.Persistence.Repositories
             {
                 if (DateTime.Now.Subtract(user.LastModifiedDate.Value.Date).Days > 0)
                 {
-                    user.LoginCounter++;
+                    user.LoginCounter += 2;
                     needUpdate = true;
                 }
             }
             else
             {
-                user.LoginCounter++;
+                user.LoginCounter += 2;
                 needUpdate = true;
             }
             if (needUpdate)
