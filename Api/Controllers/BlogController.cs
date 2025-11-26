@@ -1,4 +1,5 @@
-﻿using Autenticul.Gaming.Application.Features.Blog.Articles.Commands.CreateArticle;
+﻿using Autenticul.Gaming.Api.Utility;
+using Autenticul.Gaming.Application.Features.Blog.Articles.Commands.CreateArticle;
 using Autenticul.Gaming.Application.Features.Blog.Articles.Queries.GetArticlesInCategoryName;
 using Autenticul.Gaming.Application.Features.Blog.Articles.Queries.GetCategories;
 using Autenticul.Gaming.Application.Features.Blog.Articles.Queries.GetSingleArticle;
@@ -22,6 +23,7 @@ namespace Autenticul.Gaming.Api.Controllers
         [HttpGet("articles/{category}")]
         public async Task<IActionResult> GetArticles(string category)
         {
+            category = MethodsHelper.FormatSlug(category);
             var response = await _mediator.Send(new GetArticlesInCategoryNameQuery { CategoryName = category });
 
             return Ok(response);
