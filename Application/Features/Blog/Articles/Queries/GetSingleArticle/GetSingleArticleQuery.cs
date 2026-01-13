@@ -9,6 +9,6 @@ namespace Autenticul.Gaming.Application.Features.Blog.Articles.Queries.GetSingle
 {
     public class GetSingleArticleQuery : IRequest<GetSingleArticleResponse>
     {
-        public string Title {  get; set; } 
+        public string Slug {  get; set; } 
     }
 }

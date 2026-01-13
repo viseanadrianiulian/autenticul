@@ -94,7 +94,7 @@ namespace Autenticul.Gaming.Api
             });
         }
 
-        public static async Task ResetDatabaseAsync(this WebApplication app)
+        public static async Task ApplyMigrationsAsync(this WebApplication app)
         {
             using (var scope = app.Services.CreateScope())
             {

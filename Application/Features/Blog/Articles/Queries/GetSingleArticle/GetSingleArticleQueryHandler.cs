@@ -23,7 +23,7 @@ namespace Autenticul.Gaming.Application.Features.Blog.Articles.Queries.GetSingle
         {
             var response = new GetSingleArticleResponse();
 
-            var dbArticle = await _articleRepository.GetArticleByTitle(request.Title);
+            var dbArticle = await _articleRepository.GetArticleBySlugAsync(request.Slug);
             response.Article = _mapper.Map<ArticleDto>(dbArticle);
 
             return response;
